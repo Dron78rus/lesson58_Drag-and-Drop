@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <style>
+      p {
+        font-weight: bold;
+      }
+      .topic {
+        text-decoration: underline;
+        margin: 10px;
+      }
+      .task {
+        margin: 20px 10px;
+      }
+      .container {
+        padding-bottom: 15px;
+        border-bottom: 1px black solid;
+      }
+      .movableElement {
+        height: 100px;
+        width: 150px;
+        border: blue dashed 1px;
+        display: inline-block;
+        text-align: center;
+      }
+      .receivingElement {
+        height: 100px;
+        width: 150px;
+        border: blue dashed 1px;
+        background-color: rgb(255, 175, 175);
+        margin-left: 20px;
+        display: inline-block;
+        text-align: center;
+        vertical-align: top;
+      }
+    </style>
+
+    <p>Задание 1</p>
+
+    <div class="topic">Перетягиваемый элемент</div>
+    <div class="task">
+      Дан див для перетягивания. Сделайте так, чтобы в момент начала
+      перетягивания его граница красилась в красный цвет.
+    </div>
+    <div class="container">
+      <div class="movableElement T1" draggable="true"></div>
+    </div>
+
+    <p>Задание 2</p>
+
+    <div class="task">
+      Дан див для перетягивания. Сделайте так, чтобы в момент начала
+      перетягивания его граница красилась в красный цвет.
+    </div>
+    <div class="container">
+      <div class="movableElement T2" draggable="true"></div>
+    </div>
+
+    <p>Задание 3</p>
+
+    <div class="task">
+      Дан див для перетягивания. Сделайте так, чтобы в процессе перетягивания в
+      консоль выводился '!' (каждый раз при срабатывании события).
+    </div>
+    <div class="container">
+      <div class="movableElement T3" draggable="true"></div>
+    </div>
+
+    <p>Задание 4</p>
+
+    <div class="topic">Принимающий элемент</div>
+    <div class="task">
+      Дан элемент для перетягивания и принимающий див. Сделайте так, чтобы по
+      дропу граница принимающего дива красилась в красный цвет.
+    </div>
+    <div class="container">
+      <div class="movableElement T4" draggable="true">
+        элемент для перетягивания
+      </div>
+      <div class="receivingElement RT4">принимающий див</div>
+    </div>
+
+    <p>Задание 5</p>
+
+    <div class="task">
+      Дан элемент для перетягивания и принимающий див. Сделайте так, чтобы при
+      движении элемента над принимающем дивом граница принимающего дива в виде
+      точечек.
+    </div>
+    <div class="container">
+      <div class="movableElement T5" draggable="true">
+        элемент для перетягивания
+      </div>
+      <div class="receivingElement RT5">принимающий див</div>
+    </div>
+
+    <p>Задание 6</p>
+
+    <div class="task">
+      Дан элемент для перетягивания и принимающий див. Сделайте так, чтобы при
+      вхождении элемента в границы принимающего дива в текст принимающего дива
+      записывался '!', а при уходе - этот текст убирался.
+    </div>
+    <div class="container">
+      <div class="movableElement T6" draggable="true">
+        элемент для перетягивания
+      </div>
+      <div class="receivingElement RT6">принимающий див</div>
+    </div>
+
+    <p>Задание 7</p>
+
+    <div class="task">
+      Дан див для перетягивания и принимающий див. Сделайте так, чтобы в
+      процессе перетягивания граница принимаемого становилась не сплошной, а в
+      виде точечек.
+    </div>
+    <div class="container">
+      <div class="movableElement T7" draggable="true">
+        элемент для перетягивания
+      </div>
+      <div class="receivingElement RT7">принимающий див</div>
+    </div>
+
+    <script>
+      // http://new.code.mu/ru/javascript/book/drag-and-drop/available-events/
+
+      // задание 1
+
+      const d = document
+      T1 = d.querySelector('.T1')
+
+      T1.addEventListener('dragstart', () => {
+        T1.style.border = '1px solid red'
+      })
+
+      // задание 2
+
+      T2 = d.querySelector('.T2')
+
+      T2.addEventListener('dragend', () => {
+        T2.style.border = '1px solid green'
+      })
+
+      // задание 3
+
+      T3 = d.querySelector('.T3')
+      T3.style.border = '5px solid green'
+
+      T3.addEventListener('drag', () => {
+        T3.style.borderColor = `rgb(${Math.random() * 256}, ${
+          Math.random() * 256
+        }, ${Math.random() * 256})`
+      })
+
+      // задание 4
+
+      RT4 = d.querySelector('.RT4')
+
+      RT4.addEventListener('dragover', (e) => {
+        e.preventDefault()
+      })
+      RT4.addEventListener('drop', () => {
+        RT4.style.border = '1px solid red'
+        RT4.style.backgroundColor = 'rgb(211, 255, 139)'
+      })
+
+      // задание 5
+
+      RT5 = d.querySelector('.RT5')
+
+      RT5.addEventListener('dragover', () => {
+        if (RT5.style.border == 'dotted') {
+          RT5.style.border = 'dashed'
+        } else RT5.style.border = 'dotted'
+      })
+
+      // задание 6
+
+      RT6 = d.querySelector('.RT6')
+
+      RT6.addEventListener('dragenter', () => {
+        RT6.textContent = "в текст принимающего дива записался '!'"
+      })
+
+      RT6.addEventListener('dragleave', () => {
+        RT6.textContent = 'тот текст убирался'
+      })
+
+      // задание 7
+
+      RT7 = d.querySelector('.RT7')
+      T7 = d.querySelector('.T7')
+
+      RT7.addEventListener('dragover', () => {
+        if (T7.style.border == 'dotted') {
+          T7.style.border = 'dashed'
+        } else T7.style.border = 'dotted'
+      })
+    </script>
+  </body>
+</html>
